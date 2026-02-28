@@ -1,13 +1,31 @@
-import { useState, useEffect } from 'react'
+import { useState, useEffect, useRef } from 'react'
 import './HomePage.css'
 import { DecodeText } from './DecodeText'
 
 const NAV_DECODE_DURATION_MS = 1000
 const MAIN_REVEAL_OFFSET_MS = 500
 
+const STATEMENT_HEADLINE = 'Our software powers real-time, AI-driven decisions in critical government and commercial enterprises in the West, from the factory floors to the front lines.'
+const STATEMENT_ACCENT_START = 28  // 'AI-driven' start
+const STATEMENT_ACCENT_END = 37    // 'AI-driven' end
+const TYPING_INTERVAL_MS = 38
+const STATEMENT_IMAGE_ANIMATION_MS = 1800
+
+const INDUSTRIES_DECODE_DURATION_MS = 900
+const INDUSTRIES_LABEL_DECODE_MS = 700
+const INDUSTRIES_DECODE_DELAY_MS = 1500
+
 const HomePage = () => {
   const [isScrolled, setIsScrolled] = useState(false)
   const [revealPhase, setRevealPhase] = useState<'black' | 'logo' | 'nav' | 'all'>('black')
+  const [statementInView, setStatementInView] = useState(false)
+  const [statementTypingStarted, setStatementTypingStarted] = useState(false)
+  const [statementTypingCount, setStatementTypingCount] = useState(0)
+  const [industriesInView, setIndustriesInView] = useState(false)
+  const statementRef = useRef<HTMLElement>(null)
+  const industriesRef = useRef<HTMLElement>(null)
+  const lookAheadRef = useRef<HTMLElement>(null)
+  const [lookAheadInView, setLookAheadInView] = useState(false)
 
   useEffect(() => {
     const t1 = setTimeout(() => setRevealPhase('logo'), 500)
@@ -15,6 +33,75 @@ const HomePage = () => {
     const t3 = setTimeout(() => setRevealPhase('all'), 1000 + MAIN_REVEAL_OFFSET_MS)
     return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
   }, [])
+
+  useEffect(() => {
+    const el = statementRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) setStatementInView(true)
+      },
+      { threshold: 0.15, rootMargin: '0px 0px -5% 0px' }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    const el = industriesRef.current
+    if (!el) return
+    let timeoutId: ReturnType<typeof setTimeout> | null = null
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        if (entry.isIntersecting) {
+          timeoutId = setTimeout(() => setIndustriesInView(true), INDUSTRIES_DECODE_DELAY_MS)
+        } else {
+          if (timeoutId) {
+            clearTimeout(timeoutId)
+            timeoutId = null
+          }
+          setIndustriesInView(false)
+        }
+      },
+      { threshold: 0.2, rootMargin: '0px 0px -5% 0px' }
+    )
+    observer.observe(el)
+    return () => {
+      if (timeoutId) clearTimeout(timeoutId)
+      observer.disconnect()
+    }
+  }, [])
+
+  useEffect(() => {
+    const el = lookAheadRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => setLookAheadInView(entry.isIntersecting),
+      { threshold: 0.1, rootMargin: '0px 0px -2% 0px' }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
+    if (!statementInView) return
+    const t = setTimeout(() => setStatementTypingStarted(true), STATEMENT_IMAGE_ANIMATION_MS)
+    return () => clearTimeout(t)
+  }, [statementInView])
+
+  useEffect(() => {
+    if (!statementTypingStarted) return
+    const interval = setInterval(() => {
+      setStatementTypingCount((prev) => {
+        if (prev >= STATEMENT_HEADLINE.length) {
+          clearInterval(interval)
+          return prev
+        }
+        return prev + 1
+      })
+    }, TYPING_INTERVAL_MS)
+    return () => clearInterval(interval)
+  }, [statementTypingStarted])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -27,7 +114,7 @@ const HomePage = () => {
   return (
     <div className={`homepage homepage--${revealPhase}`}>
       {/* Navigation */}
-      <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
+      <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${lookAheadInView ? 'navbar--light' : ''}`}>
         <div className="nav-container">
           <div className="nav-logo">
             <img src="/citistek_logo_cropped.png" alt="CITISTEK" className="nav-logo-img" />
@@ -78,43 +165,104 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* Capabilities Section */}
-      <section className="capabilities" id="capabilities">
-        <div className="section-container">
-          <h2 className="section-title">Core Capabilities</h2>
-          <div className="capabilities-grid">
-            <div className="capability-card">
-              <div className="capability-icon">⚡</div>
-              <h3>Lattice Platform</h3>
-              <p>
-                Integrated command and control providing persistent awareness
-                across land, sea, and air.
-              </p>
-            </div>
-            <div className="capability-card">
-              <div className="capability-icon">🚁</div>
-              <h3>Autonomous Systems</h3>
-              <p>
-                Air systems for intelligence, surveillance, and reconnaissance
-                missions.
-              </p>
-            </div>
-            <div className="capability-card">
-              <div className="capability-icon">🌊</div>
-              <h3>Underwater Vehicles</h3>
-              <p>
-                AUVs for littoral and deep-water survey and inspection
-                operations.
-              </p>
-            </div>
-            <div className="capability-card">
-              <div className="capability-icon">🛡️</div>
-              <h3>Counter-UAS</h3>
-              <p>
-                Advanced systems to detect, identify, track, and neutralize drone
-                threats.
-              </p>
-            </div>
+      {/* Statement Section (below hero) */}
+      <section
+        ref={statementRef}
+        className={`statement ${statementInView ? 'statement--in-view' : ''}`}
+        id="capabilities"
+      >
+        <div className="statement-row">
+          <div className="statement-container">
+            {/* Ghost headline: full text, invisible, reserves height so image doesn't grow */}
+            <h2 className="statement-headline statement-headline--ghost" aria-hidden>
+              Our software powers real-time, <span className="statement-headline-accent">AI-driven</span> decisions in critical government and commercial enterprises in the West, from the factory floors to the front lines.
+            </h2>
+            {/* Visible typing headline, overlaid */}
+            <h2 className="statement-headline statement-headline--typing" aria-label={STATEMENT_HEADLINE}>
+              {(() => {
+                const n = statementTypingCount
+                const before = STATEMENT_HEADLINE.slice(0, Math.min(STATEMENT_ACCENT_START, n))
+                const accent = STATEMENT_HEADLINE.slice(STATEMENT_ACCENT_START, Math.min(STATEMENT_ACCENT_END, n))
+                const after = STATEMENT_HEADLINE.slice(STATEMENT_ACCENT_END, n)
+                return (
+                  <>
+                    {before}
+                    {accent && <span className="statement-headline-accent">{accent}</span>}
+                    {after}
+                    {n < STATEMENT_HEADLINE.length && <span className="statement-headline-cursor" aria-hidden>|</span>}
+                  </>
+                )
+              })()}
+            </h2>
+          </div>
+          <div className="statement-visual">
+            <img
+              src="/MMAUV-thumb.jpg"
+              alt=""
+              className="statement-image"
+            />
+          </div>
+        </div>
+      </section>
+
+      {/* Industries Section */}
+      <section ref={industriesRef} className={`industries ${industriesInView ? 'industries--decode-active' : ''}`} id="industries">
+        <div className="industries-container">
+          <h2 className="industries-title">
+            <DecodeText
+              key={`industries-title-${industriesInView}`}
+              text="Industries"
+              duration={INDUSTRIES_DECODE_DURATION_MS}
+              isActive={industriesInView}
+              className="industries-title-inner"
+            />
+          </h2>
+          <div className="industries-panels">
+            <a href="#air" className="industries-panel industries-panel--air">
+              <span className="industries-panel-label">
+                <DecodeText key={`ind-air-${industriesInView}`} text="Air" duration={INDUSTRIES_LABEL_DECODE_MS} isActive={industriesInView} />
+              </span>
+              <span className="industries-panel-arrow" aria-hidden>→</span>
+            </a>
+            <a href="#land" className="industries-panel industries-panel--land">
+              <span className="industries-panel-label">
+                <DecodeText key={`ind-land-${industriesInView}`} text="Land" duration={INDUSTRIES_LABEL_DECODE_MS} isActive={industriesInView} />
+              </span>
+              <span className="industries-panel-arrow" aria-hidden>→</span>
+            </a>
+            <a href="#sea" className="industries-panel industries-panel--sea">
+              <span className="industries-panel-label">
+                <DecodeText key={`ind-sea-${industriesInView}`} text="Sea" duration={INDUSTRIES_LABEL_DECODE_MS} isActive={industriesInView} />
+              </span>
+              <span className="industries-panel-arrow" aria-hidden>→</span>
+            </a>
+            <a href="#space" className="industries-panel industries-panel--space">
+              <span className="industries-panel-label">
+                <DecodeText key={`ind-space-${industriesInView}`} text="Space" duration={INDUSTRIES_LABEL_DECODE_MS} isActive={industriesInView} />
+              </span>
+              <span className="industries-panel-arrow" aria-hidden>→</span>
+            </a>
+            <a href="#cyber" className="industries-panel industries-panel--cyber">
+              <span className="industries-panel-label">
+                <DecodeText key={`ind-cyber-${industriesInView}`} text="Cyber" duration={INDUSTRIES_LABEL_DECODE_MS} isActive={industriesInView} />
+              </span>
+              <span className="industries-panel-arrow" aria-hidden>→</span>
+            </a>
+          </div>
+        </div>
+      </section>
+
+      {/* Look Ahead Section – white, nav-aligned content band */}
+      <section ref={lookAheadRef} className="look-ahead" id="look-ahead">
+        <div className="look-ahead-container">
+          <div className="look-ahead-header">
+            <h2 className="look-ahead-title">2026 Look Ahead</h2>
+            <p className="look-ahead-subtitle">Delivering the Next Era of Defense</p>
+            <a href="#contact" className="look-ahead-cta">LEARN MORE →</a>
+          </div>
+          <div className="look-ahead-visual">
+            {/* Placeholder: replace with image or video when asset is ready */}
+            <div className="look-ahead-visual-placeholder" aria-hidden />
           </div>
         </div>
       </section>
