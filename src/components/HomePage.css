@@ -371,9 +371,12 @@
   margin: 0 auto;
 }
 
-/* Industries Section */
+/* Industries Section – same vertical padding as Statement for consistent spacing */
 .industries {
-  padding: clamp(6rem, 10vw, 8rem) 0 0;
+  padding-top: calc(clamp(5rem, 10vw, 8rem) + 30px);
+  padding-bottom: calc(clamp(5rem, 10vw, 8rem) + 30px);
+  padding-left: 0;
+  padding-right: 0;
   background: #000;
 }
 
@@ -492,7 +495,7 @@
 .look-ahead-container {
   max-width: 1400px;
   margin: 0 auto;
-  padding: 0 2rem;
+  padding: 0;
 }
 
 .look-ahead-header {

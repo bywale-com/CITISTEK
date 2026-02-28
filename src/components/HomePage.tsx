@@ -77,7 +77,7 @@ const HomePage = () => {
     if (!el) return
     const observer = new IntersectionObserver(
       ([entry]) => setLookAheadInView(entry.isIntersecting),
-      { threshold: 0.1, rootMargin: '0px 0px -2% 0px' }
+      { threshold: 0.35, rootMargin: '0px 0px -10% 0px' }
     )
     observer.observe(el)
     return () => observer.disconnect()
