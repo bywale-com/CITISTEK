@@ -26,6 +26,7 @@ const HomePage = () => {
   const industriesRef = useRef<HTMLElement>(null)
   const lookAheadRef = useRef<HTMLElement>(null)
   const [lookAheadInView, setLookAheadInView] = useState(false)
+  const lookAheadRatioRef = useRef(0)
 
   useEffect(() => {
     const t1 = setTimeout(() => setRevealPhase('logo'), 500)
@@ -76,8 +77,15 @@ const HomePage = () => {
     const el = lookAheadRef.current
     if (!el) return
     const observer = new IntersectionObserver(
-      ([entry]) => setLookAheadInView(entry.isIntersecting),
-      { threshold: 0.35, rootMargin: '0px 0px -10% 0px' }
+      ([entry]) => {
+        const r = entry.intersectionRatio
+        const prev = lookAheadRatioRef.current
+        lookAheadRatioRef.current = r
+        if (r >= 0.55) setLookAheadInView(true)
+        else if (r <= 0.05) setLookAheadInView(false)
+        else if (r > prev && r >= 0.25) setLookAheadInView(true)  // scrolling up: turn white once section is 25% in view
+      },
+      { threshold: [0.05, 0.25, 0.55], rootMargin: '0px 0px -20% 0px' }
     )
     observer.observe(el)
     return () => observer.disconnect()
