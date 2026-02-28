@@ -1,0 +1,14 @@
+---
+description: When user says commit or push, stage entire repo with git add . then commit and push
+alwaysApply: true
+---
+
+# Git commit behavior
+
+When the user says **commit** or **push** (e.g. "commit", "push", "commit everything", "commit and push"):
+
+1. **Stage the entire repo:** run `git add .` (do not selectively add files).
+2. **Commit:** use a clear message (either from the user or a short summary of recent work).
+3. **Push:** run `git push` to the current branch.
+
+Do not use `git add <file1> <file2>` for commit requests—always use `git add .` unless the user explicitly asks to commit only specific files.
