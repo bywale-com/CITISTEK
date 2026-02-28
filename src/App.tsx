@@ -1,4 +1,5 @@
 import { useState, useEffect, useRef } from 'react'
+import { ReactLenis } from 'lenis/react'
 import './App.css'
 import HomePage from './components/HomePage'
 
@@ -87,7 +88,9 @@ function App() {
       <div
         className={`app-content ${preloaderPhase === 'show' ? 'app-content--hidden' : ''} ${preloaderPhase === 'fade' ? 'app-content--fade-in' : ''}`}
       >
-        <HomePage key={preloaderPhase} />
+        <ReactLenis root options={{ lerp: 0.1, smoothWheel: true }}>
+          <HomePage key={preloaderPhase} />
+        </ReactLenis>
       </div>
     </>
   )

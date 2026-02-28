@@ -1,6 +1,10 @@
 import { useState, useEffect, useRef } from 'react'
 import './HomePage.css'
 import { DecodeText } from './DecodeText'
+import { InversaScroll } from './InversaScroll'
+import { NewsCarousel } from './NewsCarousel'
+import { useLenis } from 'lenis/react'
+import { ScrollTrigger } from 'gsap/ScrollTrigger'
 
 const NAV_DECODE_DURATION_MS = 1000
 const MAIN_REVEAL_OFFSET_MS = 500
@@ -13,7 +17,7 @@ const STATEMENT_IMAGE_ANIMATION_MS = 1800
 
 const INDUSTRIES_DECODE_DURATION_MS = 900
 const INDUSTRIES_LABEL_DECODE_MS = 700
-const INDUSTRIES_DECODE_DELAY_MS = 1500
+const INDUSTRIES_DECODE_DELAY_MS = 500
 
 const HomePage = () => {
   const [isScrolled, setIsScrolled] = useState(false)
@@ -25,7 +29,9 @@ const HomePage = () => {
   const statementRef = useRef<HTMLElement>(null)
   const industriesRef = useRef<HTMLElement>(null)
   const lookAheadRef = useRef<HTMLElement>(null)
+  const newsRef = useRef<HTMLElement>(null)
   const [lookAheadInView, setLookAheadInView] = useState(false)
+  const [newsInView, setNewsInView] = useState(false)
   const lookAheadRatioRef = useRef(0)
 
   useEffect(() => {
@@ -92,6 +98,19 @@ const HomePage = () => {
   }, [])
 
   useEffect(() => {
+    const el = newsRef.current
+    if (!el) return
+    const observer = new IntersectionObserver(
+      ([entry]) => {
+        setNewsInView(entry.isIntersecting)
+      },
+      { threshold: 0.3, rootMargin: '0px 0px -10% 0px' }
+    )
+    observer.observe(el)
+    return () => observer.disconnect()
+  }, [])
+
+  useEffect(() => {
     if (!statementInView) return
     const t = setTimeout(() => setStatementTypingStarted(true), STATEMENT_IMAGE_ANIMATION_MS)
     return () => clearTimeout(t)
@@ -119,10 +138,19 @@ const HomePage = () => {
     return () => window.removeEventListener('scroll', handleScroll)
   }, [])
 
+  const lenis = useLenis()
+  useEffect(() => {
+    if (!lenis) return
+    lenis.on('scroll', ScrollTrigger.update)
+    return () => lenis.off('scroll', ScrollTrigger.update)
+  }, [lenis])
+
+  const navIsLight = lookAheadInView || newsInView
+
   return (
     <div className={`homepage homepage--${revealPhase}`}>
       {/* Navigation */}
-      <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${lookAheadInView ? 'navbar--light' : ''}`}>
+      <nav className={`navbar ${isScrolled ? 'scrolled' : ''} ${navIsLight ? 'navbar--light' : ''}`}>
         <div className="nav-container">
           <div className="nav-logo">
             <img src="/citistek_logo_cropped.png" alt="CITISTEK" className="nav-logo-img" />
@@ -268,11 +296,8 @@ const HomePage = () => {
             <p className="look-ahead-subtitle">Delivering the Next Era of Defense</p>
             <a href="#contact" className="look-ahead-cta">LEARN MORE →</a>
           </div>
-          <div className="look-ahead-visual">
-            {/* Placeholder: replace with image or video when asset is ready */}
-            <div className="look-ahead-visual-placeholder" aria-hidden />
-          </div>
         </div>
+        <InversaScroll />
       </section>
 
       {/* Mission Section */}
@@ -294,45 +319,11 @@ const HomePage = () => {
         </div>
       </section>
 
-      {/* News/Updates Section */}
-      <section className="news" id="news">
+      {/* News/Updates Section – carousel */}
+      <section ref={newsRef} className="news" id="news">
         <div className="section-container">
           <h2 className="section-title">Latest Updates</h2>
-          <div className="news-grid">
-            <article className="news-card">
-              <div className="news-date">Dec 2024</div>
-              <h3>How Defense Technology Actually Gets Built</h3>
-              <p>
-                Exploring the engineering and development process behind modern
-                defense systems.
-              </p>
-              <a href="#" className="news-link">
-                Read More →
-              </a>
-            </article>
-            <article className="news-card">
-              <div className="news-date">Nov 2024</div>
-              <h3>Advancing Autonomous Capabilities</h3>
-              <p>
-                Latest developments in AI-powered autonomous systems for defense
-                applications.
-              </p>
-              <a href="#" className="news-link">
-                Read More →
-              </a>
-            </article>
-            <article className="news-card">
-              <div className="news-date">Oct 2024</div>
-              <h3>Partnership Announcements</h3>
-              <p>
-                Strategic collaborations to accelerate defense technology
-                innovation.
-              </p>
-              <a href="#" className="news-link">
-                Read More →
-              </a>
-            </article>
-          </div>
+          <NewsCarousel />
         </div>
       </section>
 
