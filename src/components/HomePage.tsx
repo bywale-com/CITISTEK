@@ -65,7 +65,16 @@ const HomePage = () => {
           </div>
         </div>
         <div className="hero-visual">
-          <div className="hero-gradient"></div>
+          <video
+            className="hero-video"
+            src="/2025_Home-Page_Masthead_V3_autooptimized_1920x1080.mp4"
+            autoPlay
+            muted
+            loop
+            playsInline
+            aria-hidden
+          />
+          <div className="hero-gradient" />
         </div>
       </section>
 
