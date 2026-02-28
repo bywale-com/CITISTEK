@@ -1,0 +1,2 @@
+Place stop.ttf here (copy from the main project's public/fonts/ if you have it).
+The page will still load without it; the font will fall back to sans-serif.
