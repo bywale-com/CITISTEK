@@ -1,3 +1,63 @@
-/* App-specific styles */
+/* Stop font (logo typeface) */
+@font-face {
+  font-family: 'Stop';
+  src: url('/fonts/stop.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: block;
+}
 
+/* Preloader overlay: full screen, logo centered */
+.preloader {
+  position: fixed;
+  inset: 0;
+  z-index: 9999;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  background: #000;
+  transition: opacity 0.2s ease-out;
+}
 
+.preloader--fade-out {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.preloader__inner {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.preloader__text {
+  font-family: 'Stop', sans-serif;
+  font-size: clamp(2.5rem, 8vw, 5rem);
+  font-weight: normal;
+  letter-spacing: 0.02em;
+  color: #fff;
+}
+
+.preloader__char {
+  display: inline-block;
+}
+
+.preloader__char--locked {
+  /* Optional: subtle emphasis when character locks (e.g. color) */
+}
+
+/* Main content: hidden at first, then fades in */
+.app-content {
+  min-height: 100vh;
+  transition: opacity 0.2s ease-out;
+}
+
+.app-content--hidden {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.app-content--fade-in {
+  opacity: 1;
+  pointer-events: auto;
+}

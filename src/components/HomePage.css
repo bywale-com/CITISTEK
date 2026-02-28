@@ -5,6 +5,48 @@
   color: #fff;
 }
 
+/* Staggered reveal: 1s black, then logo → nav (0.5s) → rest (0.5s) */
+.homepage--black .nav-logo,
+.homepage--black .nav-links,
+.homepage--black .nav-cta,
+.homepage--black .homepage__main {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.homepage--logo .nav-logo {
+  opacity: 1;
+  transition: opacity 0.4s ease-out;
+}
+
+.homepage--logo .nav-links,
+.homepage--logo .nav-cta {
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.4s ease-out;
+}
+
+.homepage--nav .nav-links,
+.homepage--nav .nav-cta {
+  opacity: 1;
+  pointer-events: auto;
+}
+
+.homepage__main {
+  transition: opacity 0.4s ease-out;
+}
+
+.homepage--logo .homepage__main,
+.homepage--nav .homepage__main {
+  opacity: 0;
+  pointer-events: none;
+}
+
+.homepage--all .homepage__main {
+  opacity: 1;
+  pointer-events: auto;
+}
+
 /* Navigation */
 .navbar {
   position: fixed;
@@ -33,11 +75,12 @@
   justify-content: space-between;
 }
 
-.nav-logo .logo-text {
-  font-size: 1.5rem;
-  font-weight: 700;
-  letter-spacing: 2px;
-  color: #fff;
+.nav-logo .logo-text,
+.nav-logo-img {
+  display: block;
+  height: 36px;
+  width: auto;
+  object-fit: contain;
 }
 
 .nav-links {
@@ -47,6 +90,7 @@
 }
 
 .nav-links a {
+  font-family: 'Microgamma', sans-serif;
   color: rgba(255, 255, 255, 0.8);
   text-decoration: none;
   font-size: 0.95rem;
@@ -59,6 +103,7 @@
 }
 
 .nav-cta {
+  font-family: 'Microgamma', sans-serif;
   background: #fff;
   color: #000;
   border: none;
@@ -72,6 +117,16 @@
 .nav-cta:hover {
   background: rgba(255, 255, 255, 0.9);
   transform: translateY(-1px);
+}
+
+.nav-link-inner,
+.nav-cta-inner {
+  display: inline;
+}
+
+.nav-link-inner span,
+.nav-cta-inner span {
+  display: inline;
 }
 
 /* Hero Section */

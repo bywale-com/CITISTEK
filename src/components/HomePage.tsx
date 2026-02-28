@@ -1,8 +1,20 @@
 import { useState, useEffect } from 'react'
 import './HomePage.css'
+import { DecodeText } from './DecodeText'
+
+const NAV_DECODE_DURATION_MS = 1000
+const MAIN_REVEAL_OFFSET_MS = 500
 
 const HomePage = () => {
   const [isScrolled, setIsScrolled] = useState(false)
+  const [revealPhase, setRevealPhase] = useState<'black' | 'logo' | 'nav' | 'all'>('black')
+
+  useEffect(() => {
+    const t1 = setTimeout(() => setRevealPhase('logo'), 500)
+    const t2 = setTimeout(() => setRevealPhase('nav'), 1000)
+    const t3 = setTimeout(() => setRevealPhase('all'), 1000 + MAIN_REVEAL_OFFSET_MS)
+    return () => { clearTimeout(t1); clearTimeout(t2); clearTimeout(t3) }
+  }, [])
 
   useEffect(() => {
     const handleScroll = () => {
@@ -13,24 +25,28 @@ const HomePage = () => {
   }, [])
 
   return (
-    <div className="homepage">
+    <div className={`homepage homepage--${revealPhase}`}>
       {/* Navigation */}
       <nav className={`navbar ${isScrolled ? 'scrolled' : ''}`}>
         <div className="nav-container">
           <div className="nav-logo">
-            <span className="logo-text">CITISTEK</span>
+            <img src="/citistek_logo_cropped.png" alt="CITISTEK" className="nav-logo-img" />
           </div>
           <div className="nav-links">
-            <a href="#capabilities">Capabilities</a>
-            <a href="#products">Products</a>
-            <a href="#about">About</a>
-            <a href="#careers">Careers</a>
-            <a href="#news">News</a>
+            <a href="#capabilities"><DecodeText key={`nav-capabilities-${revealPhase}`} text="Capabilities" duration={NAV_DECODE_DURATION_MS} isActive={revealPhase === 'nav'} className="nav-link-inner" /></a>
+            <a href="#products"><DecodeText key={`nav-products-${revealPhase}`} text="Products" duration={NAV_DECODE_DURATION_MS} isActive={revealPhase === 'nav'} className="nav-link-inner" /></a>
+            <a href="#about"><DecodeText key={`nav-about-${revealPhase}`} text="About" duration={NAV_DECODE_DURATION_MS} isActive={revealPhase === 'nav'} className="nav-link-inner" /></a>
+            <a href="#careers"><DecodeText key={`nav-careers-${revealPhase}`} text="Careers" duration={NAV_DECODE_DURATION_MS} isActive={revealPhase === 'nav'} className="nav-link-inner" /></a>
+            <a href="#news"><DecodeText key={`nav-news-${revealPhase}`} text="News" duration={NAV_DECODE_DURATION_MS} isActive={revealPhase === 'nav'} className="nav-link-inner" /></a>
           </div>
-          <button className="nav-cta">Contact</button>
+          <button type="button" className="nav-cta">
+            <DecodeText key={`nav-contact-${revealPhase}`} text="Contact" duration={NAV_DECODE_DURATION_MS} isActive={revealPhase === 'nav'} className="nav-cta-inner" />
+          </button>
         </div>
       </nav>
 
+      {/* Main content: hero, sections, footer */}
+      <div className="homepage__main">
       {/* Hero Section */}
       <section className="hero">
         <div className="hero-content">
@@ -191,6 +207,7 @@ const HomePage = () => {
           </div>
         </div>
       </footer>
+      </div>
     </div>
   )
 }

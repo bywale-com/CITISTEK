@@ -4,13 +4,25 @@
   box-sizing: border-box;
 }
 
+/* Microgamma – body/UI copy (logo uses Stop in App.css) */
+@font-face {
+  font-family: 'Microgamma';
+  src: url('/fonts/microgamma.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
+  font-display: swap;
+}
+
 body {
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
+  font-family: 'Microgamma', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow-x: hidden;
+  background: #000;
+}
+
+html {
+  background: #000;
 }
 
 code {
