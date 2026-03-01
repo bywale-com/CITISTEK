@@ -9,7 +9,7 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 const NAV_DECODE_DURATION_MS = 1000
 const MAIN_REVEAL_OFFSET_MS = 500
 
-const STATEMENT_HEADLINE = 'Every secure system asks: who is authorized? Access must be unified, centrally governed, and enforced. Fragmented control creates vulnerability. Centralized control creates resilience.'
+const STATEMENT_HEADLINE = 'Every secure system asks: who is authorized? Access must be unified, centrally governed. Fragmented control creates vulnerability. Centralized control creates resilience.'
 const STATEMENT_ACCENT_START = 69   // 'centrally governed' start
 const STATEMENT_ACCENT_END = 87     // 'centrally governed' end
 const TYPING_INTERVAL_MS = 38
@@ -174,9 +174,9 @@ const HomePage = () => {
       <section className="hero">
         <div className="hero-content">
           <h1 className="hero-title">
-            Securing the Control Layer
+            Securing The Control Layer
             <br />
-            of Modern Infrastructure
+            Of Modern Infrastructure
           </h1>
           <p className="hero-subtitle">
             Centralized identity and access systems for physical and digital environments.
@@ -210,7 +210,7 @@ const HomePage = () => {
           <div className="statement-container">
             {/* Ghost headline: full text, invisible, reserves height so image doesn't grow */}
             <h2 className="statement-headline statement-headline--ghost" aria-hidden>
-              Every secure system asks: who is authorized? Access must be unified, <span className="statement-headline-accent">centrally governed</span>, and enforced. Fragmented control creates vulnerability. Centralized control creates resilience.
+              Every secure system asks: who is authorized? Access must be unified, <span className="statement-headline-accent">centrally governed</span>. Fragmented control creates vulnerability. Centralized control creates resilience.
             </h2>
             {/* Visible typing headline, overlaid */}
             <h2 className="statement-headline statement-headline--typing" aria-label={STATEMENT_HEADLINE}>
@@ -232,7 +232,7 @@ const HomePage = () => {
           </div>
           <div className="statement-visual">
             <img
-              src="/MMAUV-thumb.jpg"
+              src="/GADGETS.jpeg"
               alt=""
               className="statement-image"
             />
@@ -270,7 +270,7 @@ const HomePage = () => {
               <span className="industries-panel-arrow" aria-hidden>→</span>
             </a>
             <a href="#government" className="industries-panel industries-panel--government">
-              <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80" alt="" className="industries-panel-img" />
+              <img src="/flag.avif" alt="" className="industries-panel-img" />
               <span className="industries-panel-brand">CITISTEK</span>
               <span className="industries-panel-label">
                 <DecodeText key={`ind-government-${industriesInView}`} text="Government" duration={INDUSTRIES_LABEL_DECODE_MS} isActive={industriesInView} />
