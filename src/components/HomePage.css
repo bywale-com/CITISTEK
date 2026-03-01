@@ -407,21 +407,32 @@
 
 .industries-panels {
   display: grid;
-  grid-template-columns: repeat(5, 1fr);
-  min-height: clamp(280px, 35vw, 420px);
+  grid-template-columns: repeat(3, 1fr);
+  min-height: clamp(320px, 38vw, 440px);
+  gap: 1.5rem;
 }
 
 .industries-panel {
   position: relative;
   display: flex;
   flex-direction: column;
-  align-items: center;
+  align-items: flex-start;
   justify-content: space-between;
-  padding: 2rem 1rem 1.5rem;
+  padding: 1.75rem 1.5rem 1.5rem;
   text-decoration: none;
   color: #fff;
   overflow: hidden;
   transition: transform 0.3s ease;
+  background: #111;
+}
+
+.industries-panel-img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  z-index: 0;
 }
 
 .industries-panel::before {
@@ -429,7 +440,7 @@
   position: absolute;
   inset: 0;
   background: rgba(0, 0, 0, 0.5);
-  z-index: 0;
+  z-index: 1;
 }
 
 .industries-panel:hover {
@@ -440,13 +451,25 @@
   background: rgba(0, 0, 0, 0.35);
 }
 
+.industries-panel-brand {
+  position: relative;
+  z-index: 2;
+  font-family: 'Stop', sans-serif;
+  font-size: clamp(1.25rem, 2vw, 1.5rem);
+  font-weight: normal;
+  letter-spacing: 0.02em;
+  color: #E10600;
+  margin-bottom: 0.25rem;
+}
+
 .industries-panel-label {
   position: relative;
-  z-index: 1;
+  z-index: 2;
+  font-family: 'Microgamma', -apple-system, BlinkMacSystemFont, 'Segoe UI', sans-serif;
   font-size: clamp(1.5rem, 2.5vw, 2.5rem);
   font-weight: 600;
   letter-spacing: -0.02em;
-  margin-top: 15%;
+  color: #fff;
   visibility: hidden;
 }
 
@@ -456,30 +479,10 @@
 
 .industries-panel-arrow {
   position: relative;
-  z-index: 1;
+  z-index: 2;
   font-size: 1.25rem;
   opacity: 0.9;
-}
-
-/* Panel background placeholders – replace with background-image when you have assets */
-.industries-panel--air {
-  background: linear-gradient(160deg, #2c3e50 0%, #3498db 50%, #87ceeb 100%);
-}
-
-.industries-panel--land {
-  background: linear-gradient(160deg, #3d2914 0%, #5d4e37 50%, #8b7355 100%);
-}
-
-.industries-panel--sea {
-  background: linear-gradient(160deg, #0c1445 0%, #1a237e 50%, #1565c0 100%);
-}
-
-.industries-panel--space {
-  background: linear-gradient(180deg, #0d0221 0%, #1a0a2e 40%, #2d1b4e 100%);
-}
-
-.industries-panel--cyber {
-  background: linear-gradient(160deg, #0d1117 0%, #161b22 50%, #21262d 100%);
+  margin-top: auto;
 }
 
 /* Look Ahead Section – CITISTEK red (dimmed) */
@@ -810,21 +813,7 @@
   }
 
   .industries-panels {
-    grid-template-columns: repeat(2, 1fr);
-  }
-
-  .industries-panel:nth-child(5) {
-    grid-column: span 2;
-  }
-}
-
-@media (max-width: 600px) {
-  .industries-panels {
     grid-template-columns: 1fr;
-  }
-
-  .industries-panel:nth-child(5) {
-    grid-column: span 1;
   }
 }
 

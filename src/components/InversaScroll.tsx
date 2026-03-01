@@ -191,33 +191,35 @@ export function InversaScroll() {
       <div className="inversa-hero-content" ref={heroContentRef}>
         <div className="inversa-hero-content-block">
           <div className="inversa-hero-content-copy">
-            <h2 className="inversa-hero-title">Location Framework</h2>
+            <h2 className="inversa-hero-title">Unified Identity Framework</h2>
           </div>
         </div>
         <div className="inversa-hero-content-block">
           <div className="inversa-hero-content-copy">
-            <h3 className="inversa-hero-h3">Coordinate Mapping</h3>
+            <h3 className="inversa-hero-h3">Authorization Mapping</h3>
             <p>
-              Terrain data is interpreted through directional vectors. Movement
-              responds to relative position rather than absolute distance.
+              Identity is indexed across physical and digital layers.
+              Permissions respond to verified status,
+              not static credentials.
             </p>
           </div>
         </div>
         <div className="inversa-hero-content-block">
           <div className="inversa-hero-content-copy">
-            <h3 className="inversa-hero-h3">Active Locations</h3>
+            <h3 className="inversa-hero-h3">Active Enforcement Nodes</h3>
             <p>
-              Key points are indexed within the field. Each location functions
-              as a reference for spatial alignment and transition logic.
+              Access points function as enforcement checkpoints.
+              Each node references the same centralized control logic.
             </p>
           </div>
         </div>
         <div className="inversa-hero-content-block">
           <div className="inversa-hero-content-copy">
-            <h3 className="inversa-hero-h3">Spatial Center</h3>
+            <h3 className="inversa-hero-h3">System Convergence</h3>
             <p>
-              The system converges toward a balanced focal region. Motion
-              decelerates as positional variance reaches equilibrium.
+              All identity flows resolve through a single control architecture.
+              Authorization becomes traceable.
+              Audit becomes continuous.
             </p>
           </div>
         </div>

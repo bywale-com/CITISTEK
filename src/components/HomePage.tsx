@@ -9,9 +9,9 @@ import { ScrollTrigger } from 'gsap/ScrollTrigger'
 const NAV_DECODE_DURATION_MS = 1000
 const MAIN_REVEAL_OFFSET_MS = 500
 
-const STATEMENT_HEADLINE = 'Our software powers real-time, AI-driven decisions in critical government and commercial enterprises in the West, from the factory floors to the front lines.'
-const STATEMENT_ACCENT_START = 28  // 'AI-driven' start
-const STATEMENT_ACCENT_END = 37    // 'AI-driven' end
+const STATEMENT_HEADLINE = 'Every secure system asks: who is authorized? Access must be unified, centrally governed, and enforced. Fragmented control creates vulnerability. Centralized control creates resilience.'
+const STATEMENT_ACCENT_START = 69   // 'centrally governed' start
+const STATEMENT_ACCENT_END = 87     // 'centrally governed' end
 const TYPING_INTERVAL_MS = 38
 const STATEMENT_IMAGE_ANIMATION_MS = 1800
 
@@ -174,17 +174,16 @@ const HomePage = () => {
       <section className="hero">
         <div className="hero-content">
           <h1 className="hero-title">
-            Transforming Defense Capabilities
+            Securing the Control Layer
             <br />
-            with Advanced Technology
+            of Modern Infrastructure
           </h1>
           <p className="hero-subtitle">
-            Building autonomous systems and AI-powered platforms that solve
-            critical defense challenges at the tactical edge.
+            Centralized identity and access systems for physical and digital environments.
           </p>
           <div className="hero-buttons">
-            <button className="btn-primary">Explore Capabilities</button>
-            <button className="btn-secondary">Watch Video</button>
+            <button className="btn-primary">Explore Infrastructure</button>
+            <button className="btn-secondary">View Systems</button>
           </div>
         </div>
         <div className="hero-visual">
@@ -211,7 +210,7 @@ const HomePage = () => {
           <div className="statement-container">
             {/* Ghost headline: full text, invisible, reserves height so image doesn't grow */}
             <h2 className="statement-headline statement-headline--ghost" aria-hidden>
-              Our software powers real-time, <span className="statement-headline-accent">AI-driven</span> decisions in critical government and commercial enterprises in the West, from the factory floors to the front lines.
+              Every secure system asks: who is authorized? Access must be unified, <span className="statement-headline-accent">centrally governed</span>, and enforced. Fragmented control creates vulnerability. Centralized control creates resilience.
             </h2>
             {/* Visible typing headline, overlaid */}
             <h2 className="statement-headline statement-headline--typing" aria-label={STATEMENT_HEADLINE}>
@@ -247,40 +246,34 @@ const HomePage = () => {
           <h2 className="industries-title">
             <DecodeText
               key={`industries-title-${industriesInView}`}
-              text="Industries"
+              text="Domains"
               duration={INDUSTRIES_DECODE_DURATION_MS}
               isActive={industriesInView}
               className="industries-title-inner"
             />
           </h2>
           <div className="industries-panels">
-            <a href="#air" className="industries-panel industries-panel--air">
+            <a href="#access" className="industries-panel industries-panel--access">
+              <img src="https://images.unsplash.com/photo-1558618666-fcd25c85cd64?w=800&q=80" alt="" className="industries-panel-img" />
+              <span className="industries-panel-brand">CITISTEK</span>
               <span className="industries-panel-label">
-                <DecodeText key={`ind-air-${industriesInView}`} text="Air" duration={INDUSTRIES_LABEL_DECODE_MS} isActive={industriesInView} />
+                <DecodeText key={`ind-access-${industriesInView}`} text="Access" duration={INDUSTRIES_LABEL_DECODE_MS} isActive={industriesInView} />
               </span>
               <span className="industries-panel-arrow" aria-hidden>→</span>
             </a>
-            <a href="#land" className="industries-panel industries-panel--land">
+            <a href="#workforce" className="industries-panel industries-panel--workforce">
+              <img src="https://images.unsplash.com/photo-1522071820081-009f0129c71c?w=800&q=80" alt="" className="industries-panel-img" />
+              <span className="industries-panel-brand">CITISTEK</span>
               <span className="industries-panel-label">
-                <DecodeText key={`ind-land-${industriesInView}`} text="Land" duration={INDUSTRIES_LABEL_DECODE_MS} isActive={industriesInView} />
+                <DecodeText key={`ind-workforce-${industriesInView}`} text="Workforce" duration={INDUSTRIES_LABEL_DECODE_MS} isActive={industriesInView} />
               </span>
               <span className="industries-panel-arrow" aria-hidden>→</span>
             </a>
-            <a href="#sea" className="industries-panel industries-panel--sea">
+            <a href="#government" className="industries-panel industries-panel--government">
+              <img src="https://images.unsplash.com/photo-1545324418-cc1a3fa10c00?w=800&q=80" alt="" className="industries-panel-img" />
+              <span className="industries-panel-brand">CITISTEK</span>
               <span className="industries-panel-label">
-                <DecodeText key={`ind-sea-${industriesInView}`} text="Sea" duration={INDUSTRIES_LABEL_DECODE_MS} isActive={industriesInView} />
-              </span>
-              <span className="industries-panel-arrow" aria-hidden>→</span>
-            </a>
-            <a href="#space" className="industries-panel industries-panel--space">
-              <span className="industries-panel-label">
-                <DecodeText key={`ind-space-${industriesInView}`} text="Space" duration={INDUSTRIES_LABEL_DECODE_MS} isActive={industriesInView} />
-              </span>
-              <span className="industries-panel-arrow" aria-hidden>→</span>
-            </a>
-            <a href="#cyber" className="industries-panel industries-panel--cyber">
-              <span className="industries-panel-label">
-                <DecodeText key={`ind-cyber-${industriesInView}`} text="Cyber" duration={INDUSTRIES_LABEL_DECODE_MS} isActive={industriesInView} />
+                <DecodeText key={`ind-government-${industriesInView}`} text="Government" duration={INDUSTRIES_LABEL_DECODE_MS} isActive={industriesInView} />
               </span>
               <span className="industries-panel-arrow" aria-hidden>→</span>
             </a>
@@ -292,9 +285,9 @@ const HomePage = () => {
       <section ref={lookAheadRef} className="look-ahead" id="look-ahead">
         <div className="look-ahead-container">
           <div className="look-ahead-header">
-            <h2 className="look-ahead-title">2026 Look Ahead</h2>
-            <p className="look-ahead-subtitle">Delivering the Next Era of Defense</p>
-            <a href="#contact" className="look-ahead-cta">LEARN MORE →</a>
+            <h2 className="look-ahead-title">The Future of Access Is Centralized</h2>
+            <p className="look-ahead-subtitle">Control cannot be distributed across disconnected systems.</p>
+            <a href="#contact" className="look-ahead-cta">Learn More</a>
           </div>
         </div>
         <InversaScroll />
@@ -304,14 +297,18 @@ const HomePage = () => {
       <section className="mission">
         <div className="mission-content">
           <div className="mission-text">
-            <h2>Mission-Driven Innovation</h2>
+            <h2>Infrastructure-Level Security</h2>
             <p>
-              We bring together talented engineers and veterans to solve defense
-              problems at the tactical edge. Our AI platforms power diverse
-              applications from troop protection to wildfire fighting and search
-              & rescue missions.
+              CITISTEK builds control systems that unify access across physical and digital environments.
             </p>
-            <button className="btn-primary">Learn More</button>
+            <p>
+              Our platforms support facilities, government programs, and workforce ecosystems that require centralized authorization and continuous oversight.
+            </p>
+            <p>
+              Access is not a feature.
+              It is infrastructure.
+            </p>
+            <button className="btn-primary">View Capabilities</button>
           </div>
           <div className="mission-visual">
             <div className="mission-gradient"></div>
@@ -340,7 +337,7 @@ const HomePage = () => {
             </ul>
           </div>
           <div className="footer-section">
-            <h4>Capabilities</h4>
+            <h4>Infrastructure Systems</h4>
             <ul>
               <li><a href="#lattice">Lattice</a></li>
               <li><a href="#autonomous">Autonomous Systems</a></li>

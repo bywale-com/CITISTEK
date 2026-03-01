@@ -10,23 +10,23 @@ type NewsItem = {
 const NEWS_ITEMS: NewsItem[] = [
   {
     date: 'Dec 2024',
-    title: 'How Defense Technology Actually Gets Built',
+    title: 'How Infrastructure Control Systems Are Engineered',
     body:
-      'Exploring the engineering and development process behind modern defense systems.',
+      'An inside look at the architectural principles behind centralized access systems.',
     mediaVariant: 'a',
   },
   {
     date: 'Nov 2024',
-    title: 'Advancing Autonomous Capabilities',
+    title: 'Advancing Authorization Models',
     body:
-      'Latest developments in AI-powered autonomous systems for defense applications.',
+      'New developments in unified identity enforcement across distributed environments.',
     mediaVariant: 'b',
   },
   {
     date: 'Oct 2024',
-    title: 'Partnership Announcements',
+    title: 'System-Level Partnerships',
     body:
-      'Strategic collaborations to accelerate defense technology innovation.',
+      'Strategic collaborations focused on access governance and infrastructure security.',
     mediaVariant: 'c',
   },
 ]
